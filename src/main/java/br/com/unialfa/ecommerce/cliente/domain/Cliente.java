@@ -1,8 +1,11 @@
 package br.com.unialfa.ecommerce.cliente.domain;
 
+import br.com.unialfa.ecommerce.pedido.domain.Pedido;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Cliente implements Serializable {
@@ -10,21 +13,23 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column(unique = true)
+    private String cpf;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Pedido> pedidos;
+
     private String nome;
     private String primeiroNome;
-    private String cpf;
     private LocalDate dataNascimento;
     private int versao;
 
     public Cliente() {}
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public void setId(long id) { this.id = id; }
 
     public String getNome() {
         return nome;
@@ -42,9 +47,7 @@ public class Cliente implements Serializable {
         this.primeiroNome = primeiroNome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
+    public String getCpf() { return cpf; }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
@@ -65,4 +68,8 @@ public class Cliente implements Serializable {
     public void setVersao(int versao) {
         this.versao = versao;
     }
+
+    public List<Pedido> getPedidos() { return pedidos; }
+
+    public void setPedidos(List<Pedido> pedidos) { this.pedidos = pedidos; }
 }
